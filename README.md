@@ -1,6 +1,9 @@
 # ShellScriptingBook
 ## Shell Scripting by Steve Parker
 
+### Scott's Note
+I just checked this book out from my local library. I didn't write most if any of these scripts. I got them from the book download page, https://www.wiley.com/en-us/Shell+Scripting%3A+Expert+Recipes+for+Linux%2C+Bash%2C+and+more-p-9781118166321
+
 ### Description (taken directly from the README.txt)
 This \[repo\] contains the source code for examples in "Shell Scripting: Expert Recipes for Linux, Bash, and More"
 (ISBN: 978-0470024485). The source code is for your convenience purposes only. The source code is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
