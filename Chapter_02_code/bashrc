@@ -1,0 +1,10 @@
+##################################################
+##################################################
+### actual commands to run before you get a shell
+
+
+# useful in bashrc if you have a passphrase-less key
+eval `ssh-agent`
+
+uptime
+

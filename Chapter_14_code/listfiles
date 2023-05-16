@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "Listfiles (PID $$) was called with $# arguments:"
+i=1
+while [ -a "$1" ]
+do
+  echo "${i}: $1"
+  ((i++))
+  shift
+done

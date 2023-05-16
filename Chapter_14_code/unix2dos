@@ -1,0 +1,24 @@
+#!/bin/bash
+# from http://sed.sf.net/sed1line.txt:
+# sed 's/.$//'               # assumes that all lines end with CR/LF
+# sed 's/$'"/`echo \\\r`/"             # command line under bash
+
+if [ ! -f "$1" ]; then
+  echo "Usage: `basename $0` filename"
+  echo "  `basename $0` converts between DOS and UNIX formats."
+  echo "  When called as unix2dos, it converts to DOS format."
+  echo "  Otherwise, it converts to UNIX format."
+  exit 1
+fi
+
+case `basename $0` in
+  unix2dos)
+    sed -i 's/$'"/`echo \\\r`/" $1
+    exit $?
+    ;;
+  *) # Default to being dos2unix
+    sed -i 's/.$//' $1
+    exit $?
+    ;;
+esac
+exit 0

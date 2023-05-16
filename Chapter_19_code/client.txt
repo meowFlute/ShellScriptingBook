@@ -1,0 +1,17 @@
+
+
+  This is CLIENT_NAME_HERE, booted from SERVER_NAME_HERE.
+
+  Type:
+
+	boot		to boot from the local hard disk
+
+
+	install		to install OSNAME over the network
+
+
+
+  Press F1 for this screen
+  Press F2 for information on the install process
+
+

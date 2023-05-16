@@ -1,0 +1,54 @@
+# My Nifty Script.
+# Copyright (C) 2011 Steve Parker
+# This file is distributed under the same license as the PACKAGE package.
+# Steve Parker <steve@steve-parker.org>, 2011
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-06 19:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+#: script.sh:7
+msgid "savedfiles"
+msgstr "fichiersenregistrés"
+
+#: script.sh:12
+msgid "Hello, world!"
+msgstr "Bonjour tout le monde!"
+
+#: script.sh:13
+msgid "Welcome to the script."
+msgstr "Bienvenue sur le script."
+
+#. ##i18n: Thank you for translating this script!
+#. ##i18n: Please leave $RANDOM intact :-)
+#: script.sh:16
+#, sh-format
+msgid "Here's a random number: $RANDOM"
+msgstr "voici un nombre aléatoire: $RANDOM"
+
+#: script.sh:17
+#, sh-format
+msgid "Here's another: $RANDOM"
+msgstr "voici un autre: $RANDOM"
+
+#: script.sh:22
+#, sh-format
+msgid "Twice $i is $ans"
+msgstr "deux fois $i est de $ans"
+
+#: script.sh:31
+#, sh-format
+msgid "I have $i child."
+msgid_plural "I have $i children."
+msgstr[0] "J'ai $i enfant."
+msgstr[1] "J'ai $i enfants."
+

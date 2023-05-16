@@ -1,0 +1,17 @@
+##################################################
+##################################################
+### History settings
+
+
+# append, don't overwrite the history
+shopt -s histappend
+
+# control the size of the history file
+export HISTSIZE=100000
+export HISTFILESIZE=409600
+
+# ignore common commands
+export HISTIGNORE=":pwd:id:uptime:resize:ls:clear:history:"
+# ignore duplicate entries
+export HISTCONTROL=ignoredups
+

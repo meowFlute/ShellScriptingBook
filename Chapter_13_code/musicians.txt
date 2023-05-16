@@ -1,0 +1,8 @@
+Freddie Mercury         Singer   Queen     5 Sep 1946
+Brian May            Guitarist   Queen    19 Jul 1947
+John Deacon           Bass        Queen	   19 Aug 1951
+Roger Taylor         Drums      Queen      26 Jul 1949
+Benny Andersson      Pianist    Abba	16 Dec 1946
+Bjorn Ulvaeus         Guitarist       Abba     25 Apr 1945
+Anni-Frid Lyngstad   Singer      Abba     15 Nov 1945
+Agnetha Faltskog     Singer     Abba     5 Apr 1950

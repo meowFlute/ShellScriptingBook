@@ -1,0 +1,18 @@
+
+
+  This is CLIENT_NAME_HERE, booted from SERVER_NAME_HERE.
+
+    This page provides information about the boot process.
+
+    CLIENT_NAME_HERE will be installed over the network, destroying
+    the operating system currently installed on the internal disk.
+    
+    This will be installed from SERVER_NAME_HERE. If this is not what you
+    want, type boot to boot from the internal disks.
+
+
+
+  Press F1 for the main install screen
+  Press F2 for this screen
+
+

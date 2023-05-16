@@ -1,0 +1,5 @@
+func2()
+{
+  echo func2
+  anotherfunc
+}
