@@ -1,8 +1,8 @@
 # ShellScriptingBook
 ## Shell Scripting by Steve Parker
 
-### Description
-This repo contains the source code for examples in "Shell Scripting: Expert Recipes for Linux, Bash, and More"
+### Description (taken directly from the README.txt)
+This \[repo\] contains the source code for examples in "Shell Scripting: Expert Recipes for Linux, Bash, and More"
 (ISBN: 978-0470024485). The source code is for your convenience purposes only. The source code is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
 The code is organized into various folders, each folder corresponding to a chapter in the book. A folder containing the code for all of the chapters is also available for download.
