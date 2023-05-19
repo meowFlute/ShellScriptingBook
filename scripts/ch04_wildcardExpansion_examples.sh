@@ -3,6 +3,8 @@
 # Colors to differentiate my notes from program execution
 PURPLE='\033[1;34m'
 NO_COLOR='\033[0m'
+# use the following for a quick copy-paste reference
+# echo -e "${PURPLE}${NO_COLOR}"
 
 # GLOBBING
 # Globbing has two main characters '?' and '*'
@@ -58,7 +60,7 @@ echo -e "${PURPLE}See, it is gone!${NO_COLOR}"
 # you can set shell options with shopt -s [OPTION] and unset them with shopt -u [OPTION]
 # you can query a state with shopt [OPTION] for a text result or shopt -q [OPTION] for a return value (can query right after with $?, 0 = on, 1 = off)
 # -- dotglob
-#     This option helps when you want to be able to match a hidden file (starting with '.', like .bashrc) 
+#       This option helps when you want to be able to match a hidden file (starting with '.', like .bashrc) 
 touch .hidden_file
 echo
 echo -e "${PURPLE}here we query for all files but don't see any hidden files:${NO_COLOR}"
@@ -68,7 +70,8 @@ echo -e "${PURPLE}We'll set dotglob, and we can try again:${NO_COLOR} $(shopt do
 ls *
 rm .hidden_file # clean up
 shopt -u dotglob
-# if you don't want a non-matching glob to expand to a literal string, you can make it expand to a nullstring to keep output nice
+# -- nullglob 
+#       if you don't want a non-matching glob to expand to a literal string, you can make it expand to a nullstring to keep output nice
 echo
 echo -e "${PURPLE}Here is the nullglob example, where nullglob removes the bad error that happens when z* matches nothing:${NO_COLOR}"
 for filename in ch0* z*
@@ -82,3 +85,59 @@ do
     md5sum $filename
 done
 shopt -u nullglob
+# -- failglob 
+#       failgob is another way of dealing with the case where the glob matches no patterns.
+#       it makes it so bash treats it as an error rather than processing it (still returns an error though)
+echo
+echo -e "${PURPLE}Here we don't have failglob set, so \"ls z*\" will return an ls error:${NO_COLOR} $(shopt failglob)"
+ls z*
+shopt -s failglob
+echo -e "${PURPLE}Now we've set failglob and run the same command:${NO_COLOR} $(shopt failglob)"
+ls z*
+shopt -u failglob
+echo -e "${PURPLE}So you see a bash error above (the ls command was never run)${NO_COLOR}"
+# -- extglob
+#       The most powerful but least documented shell option for globbing! 
+#       it allows you to use an extended set of pattern matching rules captured in parentheses, as shown here:
+#           - pattern-list is a pipe separated list of patterns, e.g. (a|bc|.txt|.php)
+#           - ?(pattern-list) matches zero or one of the patterns
+#           - *(pattern-list) matches zero or more of the patterns
+#           - +(pattern-list) matches one or more of the patterns
+#           - @(pattern-list) matches exactly one pattern
+#           - !(pattern-list) anything but one of the patterns
+shopt -s extglob
+echo
+echo -e "${PURPLE}Here we'll make a fictitous set of files using touch, ls them and then do examples with extglob${NO_COLOR}\nls a*"
+touch a a.txt a.php a.txt.txt abc abctxt abcdef
+ls a*
+echo -e "${PURPLE}Now we deploy the extglob specials${NO_COLOR}"
+echo "$(shopt extglob)"
+echo "ls a!(txt)"
+ls abc!(txt)
+echo "ls a+(.php|.txt)"
+ls a+(.php|.txt)
+echo "ls a@(.php|.txt)"
+ls a@(.php|.txt)
+echo "ls a*(.php|.txt)"
+ls a*(.php|.txt)
+echo "ls a?(.php|.txt)"
+ls a?(.php|.txt)
+rm a a.txt a.php a.txt.txt abc abctxt abcdef
+shopt -u extglob
+# -- nocaseglob
+#       makes the glob case insenstitive
+echo
+echo -e "${PURPLE}Here you'll see how nocaseglob makes globbing case insensitive${NO_COLOR}"
+touch abc ABC Abc aBC
+echo "$(shopt nocaseglob)"
+echo "ls [aA]*"
+ls [aA]*
+echo "ls a*"
+ls a*
+shopt -s nocaseglob
+echo "$(shopt nocaseglob)"
+echo "ls a*"
+ls a*
+shopt -u nocaseglob
+rm abc ABC Abc aBC
+
