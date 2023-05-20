@@ -18,6 +18,14 @@ which [ # ]
 #   it needs whitespace to be recognized as such
 # DOCUMENTATION ON TEST TYPES AND OPTIONS
 #   look in "man 1 test"
+#       Things you'll notice:
+#           - numerical tests use things like -eq, -lt, -ne instead of =, <, != to differentiate them from string tests
+#           - you combine tests with && and ||
+#               - you can also use the fact that these are only attempted after testing the preceeding test
+#                   - e.g. without an if statement you can just do the following:
+#                       - [ -r /etc/hosts ] && echo "/etc/hosts is readable" will only echo on success
+#                       - [ -r /etc/hosts ] || echo "/etc/hosts is not readable" will only echo on failure
+#                   - the book says this is good to know to read other scripts but pointless because it isn't faster
 
 # if, else, elif, fi
 #   The above revelation explains the required syntax for something like this
@@ -54,3 +62,24 @@ then
     echo "it is a symlink"
 fi
 
+# case flow
+#   the following example demonstrates case syntax
+#   some notes:
+#       - the *) would work like a catch-all default
+#       - your cases can be multiplexed with single | and & operators, and include character classes and such (globbing rules?)
+#       - ending with ;; means no other cases will be executed, but there are other options
+#           - ;;& means all subsequent cases will still be evaluated
+#           - ;& means the following case will be treated as having matched even if it doesn't
+os_type_str="$OSTYPE"   # I needed the quotes around the variable name to treat it as a string 
+echo
+echo -e "${PURPLE}This example looks at some cases for \$OSTYPE and demonstrates the possible ending usage${NO_COLOR}"
+echo "\$OSTYPE=$OSTYPE"
+shopt -s nocaseglob
+case $os_type_str in    # I needed the $ in the variable name here
+    *linux* )   echo "you're in linux"              ;;&
+    *gnu*)      echo "what a king, gnu master"      ;;
+    *cygwin*)   echo "you're in cygwin"             ;;
+    *darwin*)   echo "you're on a mac"              ;&
+    *)          echo "this is trash"                ;;
+esac
+shopt -u nocaseglob
