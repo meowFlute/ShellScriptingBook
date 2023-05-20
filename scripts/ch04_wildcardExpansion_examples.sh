@@ -141,3 +141,17 @@ ls a*
 shopt -u nocaseglob
 rm abc ABC Abc aBC
 
+# Regular Expression and Quoting
+# -- Single quotes
+#       Single quotes stop bash from interpreting anything within the quotes
+echo
+echo -e "${PURPLE}Single quoting stops the shell from interpreting anything${NO_COLOR}"
+echo 'echo '"'"'$BASH'"'"
+echo '$BASH'
+# -- Double quotes
+#       Double quotes do expand variables but not filenames
+echo -e "${PURPLE}Double quotes will expand variables${NO_COLOR}"
+echo 'echo "$BASH"'
+echo "$BASH"
+# -- backslash
+#       you can always use the backslash to escape in certain ways if desired
