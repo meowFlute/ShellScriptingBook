@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PREFIX=192.168.1
+PREFIX=192.168.0
 OCTET=1
 while [ "$OCTET" -lt "255" ]; do
   echo -en "Pinging ${PREFIX}.${OCTET}..."

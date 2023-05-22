@@ -88,3 +88,93 @@ do
 done
 
 # -- While Loops
+#	The author kind of goes off on a tangent here, but the main things presented that are useful are:
+#	    1) a while loop will continue until NON-ZERO returns from test, this means you can have basically any program as a test
+#	    2) "until" is a negated while (i.e. all testing logic is negated (TRUE && TRUE) becomes (FALSE || FALSE)
+#	    3) a while loop is a single command -- you can write from or to it in one go (no need for appending)
+#	    4) break and continue are available (e.g. in a case statement that could be clutch)
+echo
+echo -e "${PURPLE}Here is a simple example of a while loop that logs everything into a text file${NO_COLOR}"
+i=0
+while [ "$i" -le "5" ]
+do
+    echo "$(date) | $i"
+    i=`expr $i + 1`
+done > log_file.txt
+echo "cat log_file.txt"
+cat log_file.txt
+rm log_file.txt
+# same as above using an until loop
+echo -e "${PURPLE}Again now with an until loop${NO_COLOR}"
+echo -e "${PURPLE}NOTE: Notice how you don't have to append${NO_COLOR}"
+i=0
+until [ "$i" -eq "5" ]
+do
+    echo "$(date) | $i"
+    i=`expr $i + 1`
+done > log_file.txt
+echo "cat log_file.txt"
+cat log_file.txt
+# notice in this example how the last argument catches the rest of the line. 
+# You could do "line" as your variable and grab it all, or you can split it intelligently
+echo -e "${PURPLE}Show how you can have a file input to a while loop${NO_COLOR}"
+echo -e "${PURPLE}NOTE: This also shows how you can put data into variables${NO_COLOR}"
+while read dayname month daynum time ampm timezone year the_rest
+do
+    echo "$dayname $time $ampm $the_rest"
+done < log_file.txt
+echo -e "${PURPLE}Finally we demonstrate case-continue-break combos${NO_COLOR}"
+while read dayname month daynum time ampm timezone year pipe i
+do
+    case $i in
+	0) echo "Time at the 0th entry was $time"; continue ;;
+	1) echo "Day at the 1st entry was $dayname the $daynum" ;;
+	2) echo "Month at the 2nd entry was $month" ;;
+	*) echo "So long!"; break ;;
+    esac
+done < log_file.txt
+rm log_file.txt
+
+# -- Select Loops
+#	A lesser-used tool that provides simple & robust user input for a program
+#	The main things to know are:
+#	    - set PS3 to decide the prompt (unset PS3 results in #?)
+#	    - The user reply goes into $REPLY
+#	    - whatever variable you choose gets the string chosen
+echo
+echo -e "${PURPLE}Select! Let's take a look at how it works${NO_COLOR}"
+
+# we'll save off the old PS3 and reset it later just in case it is something useful
+oPS3=$PS3
+PS3="Select an option by typing in a number and hitting enter: "
+help_prompt="Select an option below! Type \"help\" for help, \"quit\" to quit"
+echo "$help_prompt"
+select response in "Meow" "Fart" "Joke"
+do
+    # quit option with a break
+    if [ "$REPLY" = "quit" ] || [ "$REPLY" = "Quit" ]
+    then
+	echo "So long!"
+	break
+    # help option with a continue
+    elif [ "$REPLY" = "help" ] || [ "$REPLY" = "Help" ]
+    then
+	echo "$help_prompt"
+	continue
+    fi
+    # case for the other responses
+    if [ ! -z $response ]
+    then
+	case $REPLY in
+	    1)  echo "Meeeeeow" ;;
+	    2)  echo "Pfffffft" ;;
+	    3)  echo "Why did the chicken go to the library?"
+		sleep 1
+		echo "So it could check out a BAWK!!!"
+		;;
+	esac
+    else
+	echo "Not a valid selection: $REPLY"
+    fi
+done
+PS3=$oPS3
