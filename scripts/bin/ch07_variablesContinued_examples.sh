@@ -161,6 +161,6 @@ done
 echo -e "\n${PURPLE}Example showing sourcing functionality. Before setting these variables nothing should happen${NO_COLOR}"
 
 echo "before: $VAR1 $VAR2 $VAR3 $VAR4"
-. $(dirname $0)/ch07_variablesContinued_vars
+. $(dirname $0)/../conf/ch07_variablesContinued_vars
 echo "after: $VAR1 $VAR2 $VAR3 $VAR4"
 
