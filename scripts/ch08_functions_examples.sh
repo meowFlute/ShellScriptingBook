@@ -67,7 +67,7 @@ rm -f $output
 
 # -- trap
 #	you can trap for kill codes using the following syntax:
-#	    trap function_name [kill code list - e.g. 1 2 3 6 9 15 20]
+#	    trap function_name [signal list - e.g. 1 2 3 6 9 15 20]
 #
 #		trap handle_exceptions 1 2 3 6 9 15 20
 #		handle_exceptions
@@ -76,6 +76,10 @@ rm -f $output
 #		}
 #
 #	this allows you to execute a function (presumably to cleanup) when you recieve a kill command before exiting
+#
+#	I won't do an example of this here, but check out /Book_Downloads/Chapter_08*/ldd.sh
+#	it is a program that would take a very long time and is using a tmp file, so it handles the quit signals
+#	so that you can quit multiple times without making a mess of your filesystem
 #
 #	Here are a list of notes I compiled, mostly from man signal(7) 
 #
@@ -118,3 +122,52 @@ rm -f $output
 #       SIGPWR          30         29/-     19      19	    Power failure (System V)
 #       SIGINFO          -         29/-     -       -	    same as SIGPWR
 
+# -- recursion
+#	works like you'd expect, check out the factorial.sh, and recursive-*.sh examples
+
+# -- local variables
+#	This one is going to be a huge lifesaver!
+#	the "local" keyword makes it so the function ignores variables already set AND doesn't clobber them, for example
+echo_purple "This example shows how a local variable works to not clobber the others with the same name - very cool!" "\n"
+meow_function()
+{
+    local meow_var="meeeow"
+    echo "local \$meow_var in the function: $meow_var"
+}
+meow_var="purrr"
+echo "\$meow_var outside the function before the function call: $meow_var"
+meow_function
+echo "\$meow_var outside the function after the function call: $meow_var"
+echo_purple "note how setting ${NO_COLOR}\$meow_var${PURPLE} in the function didn't have any effect on the ${NO_COLOR}\$meow_var${PURPLE} outside of the function even AFTER!"
+
+# -- libraries
+#	libraries are just files that
+#	    - have no shebang
+#	    - have no file extension (since they're not executed) -- I'd be tempted to use .bash.lib so it is obvious they need #!/bin/bash in the sourcing file
+#		> this is not traditiona I don't think
+#	    - are sourced 
+#		> as a result of being sources, it doesn't matter if a function references another function defined later in the file, they're all loaded at source time
+#		> if shopt sourcepath is set, then bash searches $PATH before searching the current directory, if it isn't it just searches the current dir
+#		> they can soure each other, and then anything sourcing them will source both
+#		    ~ if you make the mistake of creating a loop however, they'll recursively source each other forever and you'll get an error:
+#			.: l: 3: "too many open files" (set by "nofile" in /etc/security/limits.conf
+#		> YOU CAN AVOID THIS SAME WAY YOU DO IN C
+#		    1) set a variable that is _lib_name=1 at the top of all library files
+#		    2) load additional library files as needed by checking for their variables being set
+#			e.g. [ -z "$_other_lib" ] && . /path/to/other_lib
+#			    ~ just like "#ifndef __HEADER_FILE_NAME"!
+#	NOTE: the author suggested the following locations as potentially suitable:
+#	    - $HOME/lib for generic libraries (added to the path in ~/.bashrc)
+#	    - for a script packaged with an app, /usr/local/app_name/bin fo the script and /usr/local/app_name/lib for the library
+#	A good example of all of this is the client > *network > definitions example in /Book_Download/Chapter_08*
+#	Makes me also want to write a library for colored outputs! -- maybe I will!
+
+# -- getopts
+#	getopts works in functions just like it does in scripts
+#	    - a few things to know that the book points out:
+#		> Setting OPTERR=0 suppresses the getopts errors
+#		    ~ OPTERR=1 is set every time a new script launches automatically
+#		    ~ starting your argument list with a colong, e.g. ':habc:d' sets OPTERR=0
+#		    ~ check out the difference between /Book_Download/mkfile and /Book_Download/mkfile2 for a good example
+#		> Because getopts increments OPTIND each time it works through a variable it must be reset to 1 each time you enter the function
+#		    ~ /Book_Download/temperature.sh brings this all together, showing a good example of a function using getopts usefully
